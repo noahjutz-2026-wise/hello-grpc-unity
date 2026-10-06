@@ -24,7 +24,7 @@ jobs:
         run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
 
       - name: Restore LFS cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         id: lfs-cache
         with:
           path: .git/lfs
@@ -36,7 +36,7 @@ jobs:
           git add .
           git reset --hard
 
-      - uses: actions/cache@v4
+      - uses: actions/cache@v6
         with:
           path: Library
           key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
@@ -45,7 +45,7 @@ jobs:
 
       # Build
       - name: Build project
-        uses: game-ci/unity-builder@v4
+        uses: game-ci/unity-builder@v6
         env:
           UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
@@ -54,7 +54,7 @@ jobs:
           targetPlatform: StandaloneLinux64
 
       # Output
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: Build
           path: build
