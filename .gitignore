@@ -1,3 +1,6 @@
+# IntelliJ
+.idea
+
 # NuGetForUnity restored packages
 /Assets/Packages/
 /Assets/Packages.meta
