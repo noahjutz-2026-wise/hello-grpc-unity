@@ -9,9 +9,17 @@ jobs:
     steps:
       # Checkout (without LFS)
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
-      # Git LFS
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore NuGet packages
+        run: |
+          dotnet tool install --global NuGetForUnity.Cli
+          nugetforunity restore .
+
       - name: Create LFS file list
         run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
 
@@ -28,7 +36,6 @@ jobs:
           git add .
           git reset --hard
 
-      # Cache
       - uses: actions/cache@v4
         with:
           path: Library
